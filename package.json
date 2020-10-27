@@ -1,0 +1,27 @@
+{
+    "name": "eosjs-keos",
+    "description": "JavaScript API for using keos as Signature Provider to replace the JsSignatureProvider, which lack safety design.",
+    "version": "1989.6.4",
+    "private": false,
+    "homepage": "https://github.com/Leask/eosjs-keos",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "debug": "node --inspect debug.js",
+        "cleanup": "if [ -f ~/eosio-wallet/keosjs_test.wallet ]; then rm ~/eosio-wallet/keosjs_test.wallet; fi",
+        "pretest": "npm run cleanup",
+        "test": "node --inspect test.js",
+        "prepublishOnly": "npm version patch && npm update && ( git commit -am 'npm update' || true ) && git pull && git push",
+        "posttest": "npm run cleanup"
+    },
+    "author": "Leask Wong <i@leaskh.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Leask/eosjs-keos"
+    },
+    "dependencies": {
+        "node-fetch": "^2.6.1"
+    },
+    "devDependencies": {}
+}
