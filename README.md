@@ -40,7 +40,7 @@ It should be a drop in replacement. After these config, you can use native [eosj
 
 ```js
 const KEOS = require('eosjs-keos');
-const keos = new KEOS({ /* options */});
+const keos = new KEOS({ /* options */ });
 ```
 
 API available:
@@ -68,7 +68,7 @@ API available:
 
 ```js
 const CHAIN = require('eosjs-keos/chain');
-const chain = new CHAIN({ /* options */});
+const chain = new CHAIN({ /* options */ });
 ```
 
 API available:
