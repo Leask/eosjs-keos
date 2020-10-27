@@ -1,6 +1,6 @@
 # eosjs-keos
 
-JavaScript API for using `keos` as `Signature Provider` to replace the `JsSignatureProvider`, which lack safety design.
+JavaScript API for using `keos` as `Signature Provider` to replace the `JsSignatureProvider`.
 
 ## Install
 

@@ -1,6 +1,6 @@
 {
     "name": "eosjs-keos",
-    "description": "JavaScript API for using keos as Signature Provider to replace the JsSignatureProvider, which lack safety design.",
+    "description": "JavaScript API for using keos as Signature Provider to replace the JsSignatureProvider.",
     "version": "1989.6.4",
     "private": false,
     "homepage": "https://github.com/Leask/eosjs-keos",
