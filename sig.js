@@ -3,11 +3,7 @@
 let KeosSignatureProvider = (function() {
 
     function KeosSignatureProvider(options) {
-        options = options || {};
-        this.wallet = options.wallet || null;
-        this.password = options.password;
-        this.keos = new keos(Object.assign({
-        }, options.keosApi ? { keosApi: options.keosApi } : {}));
+        this.keos = new KEOS(options);
     }
 
     KeosSignatureProvider.prototype.getAvailableKeys = async function() {
@@ -22,9 +18,7 @@ let KeosSignatureProvider = (function() {
         ]));
         const signatures = [];
         for (let pubKey of cur.requiredKeys) {
-            const signature = await this.keos.signDigest(
-                this.wallet, this.password, digest, pubKey
-            );
+            const signature = await this.keos.signDigest(digest, pubKey);
             signatures.push(signature);
         };
         return { signatures, serializedTransaction: cur.serializedTransaction };
@@ -37,4 +31,4 @@ let KeosSignatureProvider = (function() {
 exports.KeosSignatureProvider = KeosSignatureProvider;
 
 const utilitas = require('./lib/utilitas');
-const keos = require('./');
+const KEOS = require('./');

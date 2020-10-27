@@ -21,32 +21,17 @@ const { TextEncoder, TextDecoder } = require('util');        // node only; nativ
 
 ## Basic Usage
 
-Specify api address, default:
-const defaultWallet = 'default';
-const defaultKeosApi = 'http://127.0.0.1:8900';
-
-```js
-const options = {
-
-};
-const signatureProvider = new KeosSignatureProvider({password});
-```
-
 The Signature Provider `holds the wallet password` to unlock the wallet to signing transactions.
 
 The Signature Provider `does not hold` any private keys directly.
 
 ```js
-const password = "PWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
-const signatureProvider = new KeosSignatureProvider({password});
-```
-
-For better security, you can lock/unlock the wallet all by your self outside Node.js.
-
-You have to unlock the wallet before any sensitive wallet API is requested.
-
-```js
-const signatureProvider = new KeosSignatureProvider({skipUnlock: true});
+const options = {
+    keosApi: 'http://127.0.0.1:8900',
+    wallet: 'keosjs_test',
+    password: 'PWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+};
+const signatureProvider = new KeosSignatureProvider(options);
 ```
 
 It should be a drop in replacement. After these config, you can use native [eosjs APIs](https://eosio.github.io/eosjs) smoothly. The `Signature Provider` will do the rest under the hood. More details can be found [here](https://github.com/EOSIO/eosjs).
@@ -54,23 +39,56 @@ It should be a drop in replacement. After these config, you can use native [eosj
 ## Complete Implementation of keos APIs
 
 ```js
-const keos = require('eosjs-keos');
-await keos.createKey,
-await keos.createWallet,
-await keos.getPublicKeys,
-await keos.getRpcUrl,
-await keos.getSupportedApis,
-await keos.importKey,
-await keos.listWallet,
-await keos.lock,
-await keos.lockAll,
-await keos.rpcRequest,
-await keos.unlock,
-await keos.stop,
-await keos.openWallet,
-await keos.listKeys,
-await keos.removeKey,
-await keos.setTimeout,
-await keos.signDigest,
-await keos.signTransaction,
+const KEOS = require('eosjs-keos');
+const keos = new KEOS({ /* options */});
+```
+
+API available:
+
+* getRpcUrl: AsyncFunction
+* rpcRequest: AsyncFunction
+* getSupportedApis: AsyncFunction
+* createWallet: AsyncFunction
+* listWallet: AsyncFunction
+* unlock: AsyncFunction
+* lock: AsyncFunction
+* lockAll: AsyncFunction
+* createKey: AsyncFunction
+* getPublicKeys: AsyncFunction
+* importKey: AsyncFunction
+* stop: AsyncFunction
+* openWallet: AsyncFunction
+* listKeys: AsyncFunction
+* removeKey: AsyncFunction
+* setTimeout: AsyncFunction
+* signDigest: AsyncFunction
+* signTransaction: AsyncFunction
+
+## Required chain access APIs
+
+```js
+const CHAIN = require('eosjs-keos/chain');
+const chain = new CHAIN({ /* options */});
+```
+
+API available:
+
+* getRpcUrl: AsyncFunction
+* rpcRequest: AsyncFunction
+* makeActions: Function
+* getExpiration: Function
+* makeTransaction: AsyncFunction
+* getInfo: AsyncFunction
+* getAbiByAccountName: AsyncFunction
+* abiJsonToBin: AsyncFunction
+* getAbiBin: AsyncFunction
+* makeAbiActions: AsyncFunction
+* getRequiredKeys: AsyncFunction
+* getBlock: AsyncFunction
+* pushTransaction: AsyncFunction
+
+## Test
+
+```console
+$ npm test
 ```
