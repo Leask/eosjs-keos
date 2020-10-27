@@ -21,9 +21,9 @@ const { TextEncoder, TextDecoder } = require('util');        // node only; nativ
 
 ## Basic Usage
 
-The Signature Provider `holds the wallet password` to unlock the wallet to signing transactions.
+The Signature Provider `HOLDS` the `wallet password` to unlock the wallet to signing transactions.
 
-The Signature Provider `does not hold` any private keys directly.
+The Signature Provider `DOES NOT HOLD` any `private keys` directly.
 
 ```js
 const options = {
