@@ -7,11 +7,13 @@
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
-        "debug": "node --inspect debug.js",
+        "debug": "node --inspect --trace-warnings debug.js",
+        "updep": "npx ncu -u && npm install && ( git commit -am 'update dependencies' || true )",
+        "gitsync": "git pull && git push",
+        "prepublishOnly": "npm version patch && npm run updep && npm run gitsync",
         "cleanup": "if [ -f ~/eosio-wallet/keosjs_test.wallet ]; then rm ~/eosio-wallet/keosjs_test.wallet; fi",
         "pretest": "npm run cleanup",
         "test": "node --inspect test.js",
-        "prepublishOnly": "npm version patch && npm update && ( git commit -am 'npm update' || true ) && git pull && git push",
         "posttest": "npm run cleanup"
     },
     "author": "Leask Wong <i@leaskh.com>",
