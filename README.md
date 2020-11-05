@@ -36,6 +36,22 @@ const signatureProvider = new KeosSignatureProvider(options);
 
 It should be a drop in replacement. After these config, you can use native [eosjs APIs](https://eosio.github.io/eosjs) smoothly. The `Signature Provider` will do the rest under the hood. More details can be found [here](https://github.com/EOSIO/eosjs).
 
+## Advance Options
+
+### skipUnlock
+
+`skipUnlock: false` by default. You can enable this option `skipUnlock: true` to turn off the auto-unlock feature for extreme security. The Signature Provider can be run without any password and key configurations. You need to lock/unlock the wallet all by yourself.
+
+### checkBeforeUnlock
+
+`checkBeforeUnlock: false` by default. This means the Signature Provider will try to unlock the wallet whenever needed. It's fast and stable but will case annoying logs in the `keosd` console.
+
+```
+thread-0  http_plugin.cpp:932  handle_exception  ] FC Exception encountered while processing wallet.unlock
+```
+
+Set `checkBeforeUnlock: true` to will force The Signature Provider to query and determine if the wallet needs to be unlocked, before actually unlock runs. It's a little bit slower but you can get a cleaner keosd console.
+
 ## Complete Implementation of keos APIs
 
 ```js
