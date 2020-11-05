@@ -52,7 +52,7 @@ Example:
 thread-0  http_plugin.cpp:932  handle_exception  ] FC Exception encountered while processing wallet.unlock
 ```
 
-Set `checkBeforeUnlock: true` to will force The Signature Provider to query and determine if the wallet needs to be unlocked, before actually unlock runs. It's a little bit slower but you can get a cleaner keosd console. It might cause issues when the wallet-unlock timeouts after check-action and before sign-action.
+Set `checkBeforeUnlock: true` will force The Signature Provider to query and determine if the wallet needs to be unlocked, before actually unlock runs. It's a little bit slower but you can get a cleaner keosd console. It might cause issues when the wallet-unlock timeouts after check-action and before sign-action.
 
 ## Complete Implementation of keos APIs
 
