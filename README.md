@@ -40,7 +40,7 @@ It should be a drop in replacement. After these config, you can use native [eosj
 
 ### skipUnlock
 
-`skipUnlock: false` by default. You can enable this option `skipUnlock: true` to turn off the auto-unlock feature for extreme security. The Signature Provider can be run without any password and key configurations. You need to lock/unlock the wallet all by yourself.
+`skipUnlock: false` by default. You can enable this option `skipUnlock: true` to turn off the auto-unlock feature for extreme security. The Signature Provider can be run without any password and key configurations. You have to lock/unlock the wallet all by yourself.
 
 ### checkBeforeUnlock
 
