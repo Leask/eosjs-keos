@@ -59,6 +59,7 @@ const tests = {
     createKey: { pre: () => { return [getPasswordOptions()] } },
     getPublicKeys: { pre: () => { return [getPasswordOptions()] } },
     importKey: { pre: () => { return [testPrivateKey, getPasswordOptions()] } },
+    isWalletReady: {},
     listKeys: { pre: () => { return [getPasswordOptions()] } },
     removeKey: { pre: () => { return [results['createKey'].publicKey, getPasswordOptions()] } },
     setTimeout: { args: [120] },

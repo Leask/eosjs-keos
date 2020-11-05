@@ -12,9 +12,9 @@ let KeosSignatureProvider = (function() {
 
     KeosSignatureProvider.prototype.sign = async function(cur) {
         const digest = utilitas.sha256(Buffer.concat([
-            Buffer(cur.chainId, 'hex'),
-            Buffer(cur.serializedTransaction),
-            Buffer(new Uint8Array(32)),
+            Buffer.from(cur.chainId, 'hex'),
+            Buffer.from(cur.serializedTransaction),
+            Buffer.from(new Uint8Array(32)),
         ]));
         const signatures = [];
         for (let pubKey of cur.requiredKeys) {

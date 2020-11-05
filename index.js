@@ -9,13 +9,16 @@ const keyTypes = [keyTypeK1, keyTypeR1];
 
 const constructor = (() => {
 
-    let [api, wallet, password] = [defaultKeosApi, defaultWallet, null];
+    let [api, wallet, password, skipUnlock, checkBeforeUnlock]
+        = [defaultKeosApi, defaultWallet, null, false, false];
 
     const keos = function(options) {
         options = options || {};
         api = options.keosApi || api;
         wallet = options.wallet || wallet;
         password = options.password || password;
+        skipUnlock = !!options.skipUnlock;
+        checkBeforeUnlock = !!options.checkBeforeUnlock;
         return keos;
     };
 
@@ -72,20 +75,37 @@ const constructor = (() => {
         return { wallet: walletName, password };
     };
 
-    keos.listWallet = async () => {
-        return await keos.rpcRequest('GET', 'list_wallets');
+    keos.listWallet = async (walletName) => {
+        const result = {};
+        (await keos.rpcRequest('GET', 'list_wallets')).map(x => {
+            const name = x.replace(/\ \*$/, '');
+            result[name] = { name, unlocked: x.endsWith(' *') };
+        });
+        return walletName ? result[walletName] : result;
+    };
+
+    keos.isWalletReady = async (walletName) => {
+        const resp = await keos.listWallet(keos.assertWalletName(walletName));
+        return resp && resp.unlocked;
     };
 
     keos.unlock = async (options) => {
         options = options || {};
         const wallet = keos.assertWalletName(options.wallet);
-        if (options.skipUnlock) { return { wallet }; }
-        const paswd = keos.assertPassword(options.password);
+        if (skipUnlock || options.skipUnlock) {
+            return { wallet, skipped: true };
+        }
+        const psw = keos.assertPassword(options.password);
+        const opts = [wallet, psw];
+        const skipped = (checkBeforeUnlock || options.checkBeforeUnlock)
+            && await keos.isWalletReady(wallet);
         let result = {};
         try {
-            result = await keos.rpcRequest('POST', 'unlock', [wallet, paswd]);
+            result = skipped || await keos.rpcRequest('POST', 'unlock', opts);
         } catch (er) { utilitas.assert(er.code === 3120007, er.message, 400); }
-        return { wallet, password: options.getPassword ? paswd : null, result };
+        return {
+            wallet, password: options.getPassword ? psw : null, result, skipped
+        };
     };
 
     keos.lock = async (walletName) => {
